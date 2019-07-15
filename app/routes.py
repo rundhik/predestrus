@@ -1,11 +1,15 @@
-from flask import render_template, flash, redirect, url_for
-from app import app
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LoginForm
+from app.models import User
+from app import app
+from werkzeug.urls import url_parse
+
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = {'username': 'Guest'}
     posts = [
         {
             'author' : {'username': 'John'},
@@ -16,13 +20,27 @@ def index():
             'body' : 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('index.html', title='Home', posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def masuk():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        flash('User harus login {}, ingat_saya={}'.format(form.namauser.data, form.ingat_saya.data))
-        return redirect(url_for('index'))
-    return render_template('login.html', title='Aplikasi Prdiksi - Masuk', fm=form)
+        pengguna = User.query.filter_by(username=form.namauser.data).first()
+        if pengguna is None or not pengguna.periksa_password(form.katasandi.data):
+            flash('Pengguna atau Password salah')
+            return redirect(url_for('masuk'))
+        login_user(pengguna, remember=form.ingat_saya.data)
+        laman_selanjutnya = request.args.get('next')
+        if not laman_selanjutnya or url_parse(laman_selanjutnya).netloc != '':
+            laman_selanjutnya = url_for('index')
+        return redirect(laman_selanjutnya)
+    return render_template('login.html', title='Aplikasi Prediksi - Masuk', fm=form)
+
+@app.route('/logout')
+def keluar():
+    logout_user()
+    return redirect(url_for('index'))

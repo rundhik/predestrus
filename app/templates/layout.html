@@ -9,7 +9,11 @@
     <body>
         Prediksi Estrus :
         <div><a href="{{ url_for('index') }}">Home</a></div>
-        <div><a href="{{ url_for('login') }}">Login</a></div>
+        {% if current_user.is_anonymous %}
+        <div><a href="{{ url_for('masuk') }}">Masuk</a></div>
+        {% else %}
+        <div><a href="{{ url_for('keluar') }}">Keluar</a></div>
+        {% endif %}
         <hr>
         {% with pesan = get_flashed_messages() %}
         {% if pesan %}
