@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block konten %}
+    <h1>Hi, {{ user.username }}!</h1>
+    {% for p in posts %}
+    <div><p>{{ p.author.username }} says:</p><strong>{{ p.body }}</strong></div>
+    {% endfor %}
+{% endblock %}

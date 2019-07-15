@@ -1,0 +1,25 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Aplikasi Prediksi Estrus</title>
+      {% else %}
+      <title>Selamat datang di Aplikasi Prediksi Estrus</title>
+      {% endif %}
+    </head>
+    <body>
+        Prediksi Estrus :
+        <div><a href="{{ url_for('index') }}">Home</a></div>
+        <div><a href="{{ url_for('login') }}">Login</a></div>
+        <hr>
+        {% with pesan = get_flashed_messages() %}
+        {% if pesan %}
+        <ul>
+          {% for psn in pesan %}
+          <li>{{ psn }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block konten %}{% endblock %}
+    </body>
+</html>
