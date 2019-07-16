@@ -12,4 +12,4 @@ login = LoginManager(app)
 login.login_view = 'masuk'
 login.login_message = 'Anda harus masuk untuk mengakses halaman'
 
-from app import routes, models
+from app import routes, models, errors
