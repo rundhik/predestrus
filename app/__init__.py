@@ -7,8 +7,9 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-migrasi = Migrate(app, db)
+migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'masuk'
+login.login_message = 'Anda harus masuk untuk mengakses halaman'
 
 from app import routes, models
