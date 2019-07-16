@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.forms import LoginForm
+from app.forms import MasukForm, DaftarForm
 from app.models import User
-from app import app
+from app import app, db
 from werkzeug.urls import url_parse
 
 
@@ -27,13 +27,14 @@ def index():
 def masuk():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    form = LoginForm()
+    form = MasukForm()
     if form.validate_on_submit():
         pengguna = User.query.filter_by(username=form.namauser.data).first()
         if pengguna is None or not pengguna.periksa_password(form.katasandi.data):
             flash('Pengguna atau Password salah')
             return redirect(url_for('masuk'))
         login_user(pengguna, remember=form.ingat_saya.data)
+        flash('Login Sukses')
         laman_selanjutnya = request.args.get('next')
         if not laman_selanjutnya or url_parse(laman_selanjutnya).netloc != '':
             laman_selanjutnya = url_for('index')
@@ -44,3 +45,17 @@ def masuk():
 def keluar():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def daftar():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = DaftarForm()
+    if form.validate_on_submit():
+        pengguna = User(username=form.namauser.data, email=form.surel.data)
+        pengguna.set_password(form.katasandi.data)
+        db.session.add(pengguna)
+        db.session.commit()
+        flash('Anda berhasil terdaftar')
+        return redirect(url_for('masuk'))
+    return render_template('register.html', title='Daftar', fm=form)

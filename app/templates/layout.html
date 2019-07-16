@@ -7,13 +7,15 @@
       {% endif %}
     </head>
     <body>
-        Prediksi Estrus :
-        <div><a href="{{ url_for('index') }}">Home</a></div>
-        {% if current_user.is_anonymous %}
-        <div><a href="{{ url_for('masuk') }}">Masuk</a></div>
-        {% else %}
-        <div><a href="{{ url_for('keluar') }}">Keluar</a></div>
-        {% endif %}
+        <div>
+          Prediksi Estrus :
+          <a href="{{ url_for('index') }}">Home</a>
+          {% if current_user.is_anonymous %}
+          <a href="{{ url_for('masuk') }}">Masuk</a>
+          {% else %}
+          <a href="{{ url_for('keluar') }}">Keluar</a>
+          {% endif %}
+      </div>
         <hr>
         {% with pesan = get_flashed_messages() %}
         {% if pesan %}
