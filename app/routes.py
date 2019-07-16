@@ -39,7 +39,7 @@ def masuk():
         if not laman_selanjutnya or url_parse(laman_selanjutnya).netloc != '':
             laman_selanjutnya = url_for('index')
         return redirect(laman_selanjutnya)
-    return render_template('login.html', title='Aplikasi Prediksi - Masuk', fm=form)
+    return render_template('login.html', title='Masuk', fm=form)
 
 @app.route('/logout')
 def keluar():
