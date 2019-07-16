@@ -4,7 +4,13 @@ from app.forms import MasukForm, DaftarForm
 from app.models import User
 from app import app, db
 from werkzeug.urls import url_parse
+from datetime import datetime
 
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_login = datetime.utcnow()
+        db.session.commit()
 
 @app.route('/')
 @app.route('/index')

@@ -24,6 +24,11 @@
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('masuk') }}">Masuk</a></li>
                     {% else %}
+                    <li>
+                        {% if current_user.last_login %}
+                        <a>Login terakhir : {{ moment(current_user.last_login).format('LLLL') }}</a>
+                        {% endif %}
+                    </li>
                     <li><a href="{{ url_for('keluar') }}">Keluar</a></li>
                     {% endif %}
                 </ul>
@@ -45,4 +50,9 @@
         {# Flask-Bootstrap harus pake block dgn nama 'content' dengan sub block 'sembarang_content' #}
         {% block isi_content %}{% endblock %}
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}
