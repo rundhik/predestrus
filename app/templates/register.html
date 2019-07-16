@@ -8,28 +8,28 @@
             {{ fm.namauser.label }}<br/>
             {{ fm.namauser(size=32) }}<br/>
             {% for galat in fm.namauser.errors %}
-            <span style="color: red;"> {{ galat}} </span>
+            <span style="color: red;"> {{ galat }} </span>
             {% endfor %}
         </p>
         <p>
             {{ fm.surel.label }}<br/>
             {{ fm.surel(size=32) }}<br/>
             {% for galat in fm.surel.errors %}
-            <span style="color: red;"> {{ galat}} </span>
+            <span style="color: red;"> {{ galat }} </span>
             {% endfor %}
         </p>
         <p>
             {{ fm.katasandi.label }}<br/>
             {{ fm.katasandi(size=32) }}<br/>
             {% for galat in fm.katasandi.errors %}
-            <span style="color: red;"> {{ galat}} </span>
+            <span style="color: red;"> {{ galat }} </span>
             {% endfor %}
         </p>
         <p>
             {{ fm.c_katasandi.label }}<br/>
             {{ fm.c_katasandi(size=32) }}<br/>
             {% for galat in fm.c_katasandi.errors %}
-            <span style="color: red;"> {{ galat}} </span>
+            <span style="color: red;"> {{ galat }} </span>
             {% endfor %}
         </p>
         <p>{{ fm.kirim() }}</p>
