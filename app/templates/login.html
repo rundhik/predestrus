@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block konten %}
+    <h1>Masuk Aplikasi</h1>
+    <form action="" method="post" novalidate>
+        {{ fm.hidden_tag() }}
+        <p>
+            {{ fm.namauser.label }}<br/>
+            {{ fm.namauser(size=32) }}
+            {% for galat in fm.namauser.errors %}
+            <span style="color: red;"> {{ galat }} </span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ fm.katasandi.label }}<br/>
+            {{ fm.katasandi(size=32) }}
+            {% for galat in fm.katasandi.errors %}
+            <span style="color: red;"> {{ galat }} </span>
+            {% endfor %}
+        </p>
+        <p>{{ fm.ingat_saya() }} {{ fm.ingat_saya.label }}</p>
+        <p>{{ fm.kirim() }}</p>
+    </form>
+    <p>Belum punya akun? <a href="{{ url_for('daftar') }}">Silahkan Daftar</a></p>
+{% endblock %}
