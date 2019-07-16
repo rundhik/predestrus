@@ -1,6 +1,6 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 
-{% block konten %}
+{% block isi_content %}
     <h1>Hi, {{ current_user.username }}!</h1>
     {% for p in posts %}
     <div><p>{{ p.author.username }} says:</p><strong>{{ p.body }}</strong></div>
