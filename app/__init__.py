@@ -7,6 +7,8 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 
 app = Flask(__name__)
+if __name__ == '__main__':
+    app.run(debug=True, port=9000, load_dotenv=True)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
