@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block isi_content %}
+    <h1>Menambah Wilayah</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(fm) }}
+        </div>
+    </div>
+{% endblock %}
