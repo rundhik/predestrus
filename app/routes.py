@@ -1,10 +1,21 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import MasukForm, DaftarForm
 from app.models import User
 from app import app, db
 from werkzeug.urls import url_parse
 from datetime import datetime
+import functools
+
+def has_role(name):
+    def real_decorator(f):
+        def wraps(*args, **kwargs):
+            if current_user.has_role(name):
+                return f(*args, **kwargs)
+            else:
+                abort(403)
+        return functools.update_wrapper(wraps, f)
+    return real_decorator
 
 @app.before_request
 def before_request():
@@ -14,8 +25,13 @@ def before_request():
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
+    return render_template('index.html')
+
+@app.route('/home')
+@login_required
+@has_role('admin')
+def home():
     posts = [
         {
             'author' : {'username': 'John'},
@@ -26,8 +42,7 @@ def index():
             'body' : 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', posts=posts)
-
+    return render_template('home.html', title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def masuk():

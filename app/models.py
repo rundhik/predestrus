@@ -1,11 +1,10 @@
 from datetime import datetime
-from app import db, login, rbac
-# from flask_login import UserMixin
+from app import db, login
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_rbac import RoleMixin, UserMixin
 
 users_roles = db.Table(
-    'users_roles',
+    'role_users',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
 )
@@ -19,12 +18,17 @@ class User(db.Model, UserMixin):
     roles = db.relationship(
         'Role',
         secondary=users_roles,
-        backref=db.backref('roles', lazy='dynamic')
+        backref=db.backref('users', lazy='dynamic')
     )
     last_login = db.Column(db.DateTime, default=datetime.utcnow)
     created_at  = db.Column(db.DateTime,  default=db.func.current_timestamp())
     update_at = db.Column(db.DateTime,  default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
     
+    # def __init__(self, username=""):
+    #     default = Role.query.filter_by(name="default").one()
+    #     self.roles.append(default)
+    #     self.username = username
+
     def __repr__(self):
         return '<User {} pass {}>'.format(self.username, self.password_hash)
     
@@ -41,41 +45,25 @@ class User(db.Model, UserMixin):
         for role in roles:
             self.add_role(role)
 
-    def get_roles(self):
+    def has_role(self, name):
         for role in self.roles:
-            yield role
+            if role.name == name:
+                return True
+            return False
 
 @login.user_loader
 def muat_pengguna(id):
     return User.query.get(int(id))
 
-roles_parents = db.Table(
-    'roles_parents',
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
-    db.Column('parent_id', db.Integer, db.ForeignKey('role.id'))
-)
-
-class Role(db.Model, RoleMixin):
+class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    parents = db.relationship(
-        'Role',
-        secondary=roles_parents,
-        primaryjoin=(id == roles_parents.c.role_id),
-        secondaryjoin=(id == roles_parents.c.parent_id),
-        backref=db.backref('children', lazy='dynamic')
-    )
+    name = db.Column(db.String(20), unique=True)
 
     def __init__(self, name):
-        RoleMixin.__init__(self)
         self.name = name
-
-    def add_parent(self, parent):
-        self.parents.append(parent)
-
-    def add_parents(self, *parents):
-        for parent in parents:
-            self.add_parent(parent)
+    
+    def __repr__(self):
+        return '<Role {}'.format(self.name)
 
     @staticmethod
     def get_by_name(name):
