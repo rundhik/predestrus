@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, Blueprint, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_wtf import FlaskForm as Formulir
@@ -10,7 +10,6 @@ from wtforms import (
     StringField, TextAreaField, SelectField, 
     RadioField, DateField, IntegerField, SubmitField, widgets
 )
-from flask_datepicker import datepicker
 from wtforms.validators import DataRequired, Length, Email, NumberRange
 from wtforms.widgets import html_params, HTMLString
 from sqlalchemy import func
@@ -23,12 +22,63 @@ db = SQLAlchemy(apl)
 migrate = Migrate(apl, db)
 bootstrap = Bootstrap(apl)
 moment = Moment(apl)
-@apl.route('/')
+
+induk_bp = Blueprint(
+    'induk',
+    __name__,
+    template_folder='templates/utama',
+    url_prefix="/"
+)
+
+wilayah_bp = Blueprint(
+    'wilayah',
+    __name__,
+    template_folder='templates/wilayah',
+    url_prefix="/wilayah"
+)
+
+anggota_bp = Blueprint(
+    'anggota',
+    __name__,
+    template_folder='templates/anggota',
+    url_prefix="/anggota"
+)
+sapi_bp = Blueprint(
+    'sapi',
+    __name__,
+    template_folder='templates/sapi',
+    url_prefix="/sapi"
+)
+
+@induk_bp.route('/')
 def home():
     return render_template('home.html')
 
-if __name__ == '__main__':
-    apl.run()
+@wilayah_bp.route('/', methods=('GET', 'POST'))
+def addwilayah():
+    fm = WilayahForm()
+    if fm.validate_on_submit():
+        pass
+    return render_template('wilayah_add.html', title='Tambah Wilayah', fm=fm)
+
+@anggota_bp.route('/', methods=('GET', 'POST'))
+def addanggota():
+    fm = AnggotaForm()
+    if fm.validate_on_submit():
+        pass
+    return render_template('anggota_add.html', title='Tambah Anggota', fm=fm)
+    
+@sapi_bp.route('/', methods=('GET', 'POST'))
+def addsapi():
+    fm = SapiForm()
+    if fm.validate_on_submit():
+        pass
+    return render_template('sapi_add.html', title='Inseminasi Buatan', fm=fm)
+
+apl.register_blueprint(induk_bp)
+apl.register_blueprint(wilayah_bp)
+apl.register_blueprint(anggota_bp)
+apl.register_blueprint(sapi_bp)
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -121,23 +171,5 @@ class SapiForm(Formulir):
     pkb = DateField('PKB', id='pkb')
     kirim = SubmitField('Tambah')
 
-@apl.route('/wilayah', methods=('GET', 'POST'))
-def addwilayah():
-    fm = WilayahForm()
-    if fm.validate_on_submit():
-        pass
-    return render_template('wilayah_add.html', title='Tambah Wilayah', fm=fm)
-
-@apl.route('/anggota', methods=('GET', 'POST'))
-def addanggota():
-    fm = AnggotaForm()
-    if fm.validate_on_submit():
-        pass
-    return render_template('anggota_add.html', title='Tambah Wilayah', fm=fm)
-    
-@apl.route('/sapi', methods=('GET', 'POST'))
-def addsapi():
-    fm = SapiForm()
-    if fm.validate_on_submit():
-        pass
-    return render_template('sapi_add.html', title='Tambah Wilayah', fm=fm)
+if __name__ == '__main__':
+    apl.run()
