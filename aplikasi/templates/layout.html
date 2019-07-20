@@ -1,0 +1,22 @@
+{% extends '/bootstrap/base.html' %}
+
+{% block title %}
+    {% if title %}{{ title }} - Aplikasi Prediksi Estrus Sapi{% else %}{{ ('Selamat Datang - Aplikasi Prediksi Estrus Sapi') }}{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="container">
+        {% with pesan = get_flashed_messages() %}
+        {% if pesan %}
+            {% for psn in pesan %}
+            <div class="alert alert-info" role="alert">{{ psn }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# Flask-Bootstrap harus pake block dgn nama 'content' dengan sub block 'sembarang_content' #}
+        {% block isi_content %}{% endblock %}
+    </div>
+{% endblock %}
