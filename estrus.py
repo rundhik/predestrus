@@ -1,6 +1,6 @@
 import os
 from aplikasi import buat_app, db, migrate
-from aplikasi.user.user_models import User
+from aplikasi.user.user_models import User, Role
 from aplikasi.wilayah.wilayah_models import Wilayah
 from aplikasi.anggota.anggota_models import Anggota
 from aplikasi.sapi.sapi_models import Sapi
@@ -17,7 +17,8 @@ def make_shell_context():
         Wilayah=Wilayah,
         Anggota=Anggota,
         Sapi=Sapi,
-        User=User
+        User=User,
+        Role=Role
         )
 
 if __name__ == '__main__':

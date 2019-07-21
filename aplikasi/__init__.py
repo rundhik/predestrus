@@ -1,9 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from flask_login import current_user
+from flask_login import current_user, login_required
 from datetime import datetime
 from konfigurasi import DevConfig
 
@@ -44,6 +44,7 @@ def buat_app(nama_konfigurasi):
         if current_user.is_authenticated:
             current_user.last_login = datetime.utcnow()
             db.session.commit()
+
     return apl
 
 def laman_tak_ditemukan(error):
@@ -53,3 +54,15 @@ def internal_error(error):
     return render_template('/galat/500.html'), 500
 def akses_ditolak(error):
     return render_template('/galat/403.html'), 403
+
+import functools
+
+def has_role(name):
+    def real_decorator(f):
+        def wraps(*args, **kwargs):
+            if current_user.has_role(name):
+                return f(*args, **kwargs)
+            else:
+                abort(403)
+        return functools.update_wrapper(wraps, f)
+    return real_decorator

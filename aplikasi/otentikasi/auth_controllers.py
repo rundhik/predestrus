@@ -19,7 +19,7 @@ def masuk():
         pengguna = User.query.filter_by(username=form.namauser.data).first()
         if pengguna is None or not pengguna.periksa_password(form.katasandi.data):
             flash('Pengguna atau Password salah')
-            return redirect(url_for('masuk'))
+            return redirect(url_for('auth.masuk'))
         login_user(pengguna, remember=form.ingat_saya.data)
         flash('Login Sukses')
         laman_selanjutnya = request.args.get('next')
