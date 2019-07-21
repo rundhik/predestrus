@@ -5,10 +5,10 @@ from aplikasi import has_role, login_required
 from datetime import date
 
 sapi_bp = Blueprint(
-    'sapi',
+    'cow',
     __name__,
     template_folder='../templates/sapi',
-    url_prefix="/sapi"
+    url_prefix="/cow"
 )
 
 @sapi_bp.route('/', methods=('GET', 'POST'))

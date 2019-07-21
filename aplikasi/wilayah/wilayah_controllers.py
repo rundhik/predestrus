@@ -4,10 +4,10 @@ from .wilayah_forms import WilayahForm
 from aplikasi import has_role, login_required
 
 wilayah_bp = Blueprint(
-    'wilayah',
+    'region',
     __name__,
     template_folder='../templates/wilayah',
-    url_prefix="/wilayah"
+    url_prefix="/region"
 )
 
 @wilayah_bp.route('/', methods=('GET', 'POST'))

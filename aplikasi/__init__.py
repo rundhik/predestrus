@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_login import current_user, login_required
+from flask_admin import Admin
 from datetime import datetime
 from konfigurasi import DevConfig
 
@@ -12,6 +13,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 bootstrap = Bootstrap()
 moment = Moment()
+adm = Admin()
 
 def buat_app(nama_konfigurasi):
     
@@ -22,6 +24,7 @@ def buat_app(nama_konfigurasi):
     migrate.init_app(apl, db)
     bootstrap.init_app(apl)
     moment.init_app(apl)
+    adm.init_app(apl)
 
     from .utama import buat_modul as induk_modul
     from .otentikasi import buat_modul as auth_modul
@@ -44,6 +47,17 @@ def buat_app(nama_konfigurasi):
         if current_user.is_authenticated:
             current_user.last_login = datetime.utcnow()
             db.session.commit()
+    
+    from flask_admin.contrib.sqla import ModelView
+    import aplikasi.user.user_models as muser
+    import aplikasi.sapi.sapi_models as msapi
+    import aplikasi.wilayah.wilayah_models as mwilayah
+    import aplikasi.anggota.anggota_models as manggota
+
+    adm.add_view(ModelView(muser.User, db.session))
+    adm.add_view(ModelView(msapi.Sapi, db.session))
+    adm.add_view(ModelView(mwilayah.Wilayah, db.session))
+    adm.add_view(ModelView(manggota.Anggota, db.session))
 
     return apl
 

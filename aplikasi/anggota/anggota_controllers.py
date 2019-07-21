@@ -4,10 +4,10 @@ from .anggota_forms import AnggotaForm
 from aplikasi import has_role, login_required
 
 anggota_bp = Blueprint(
-    'anggota',
+    'member',
     __name__,
     template_folder='../templates/anggota',
-    url_prefix="/anggota"
+    url_prefix="/member"
 )
 
 @anggota_bp.route('/', methods=('GET', 'POST'))
