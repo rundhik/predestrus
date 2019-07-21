@@ -1,6 +1,6 @@
 from .. import db
-from datetime import datetime
-from sqlalchemy import func
+from datetime import date, datetime
+
 
 class Sapi(db.Model):
     __tablename__ = 'sapi'
@@ -10,12 +10,11 @@ class Sapi(db.Model):
     fitur2 = db.Column(db.Integer())
     fitur3 = db.Column(db.Integer())
     laktasi = db.Column(db.Integer())
-    ib = db.Column(db.DateTime, default=datetime.now)
-    pkb = db.Column(db.DateTime, default=datetime.now)
+    ib = db.Column(db.Date, default=date.today)
+    pkb = db.Column(db.Date, default=date.today)
     anggota_id = db.Column(db.Integer(), db.ForeignKey('anggota.id'))
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    update_at = db.Column(db.DateTime, default=db.func.current_timestamps(), onupdate=db.func.current_timestamp())
-
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     def __init__(self, no_sapi):
         self.no_sapi = no_sapi
     

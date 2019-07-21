@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, flash, redirect, url_for
 from .sapi_models import db, Sapi
 from .sapi_forms import SapiForm
 from aplikasi import has_role, login_required
+from datetime import date
 
 sapi_bp = Blueprint(
     'sapi',
@@ -16,5 +17,15 @@ sapi_bp = Blueprint(
 def addsapi():
     fm = SapiForm()
     if fm.validate_on_submit():
-        pass
+        s = Sapi(no_sapi=fm.no_sapi.data)
+        s.fitur1 = fm.fitur1.data
+        s.fitur2 = fm.fitur2.data
+        s.fitur3 = fm.fitur3.data
+        s.laktasi = fm.laktasi.data
+        s.ib = fm.ib.data
+        s.pkb = fm.pkb.data
+        db.session.add(s)
+        db.session.commit()
+        flash('Data sapi berhasi ditambahkan')
+        return redirect(url_for('induk.home'))
     return render_template('sapi_add.html', title='Inseminasi Buatan', fm=fm)
