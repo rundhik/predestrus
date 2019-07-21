@@ -34,10 +34,15 @@ def daftar():
         return redirect(url_for('induk.home'))
     form = DaftarForm()
     if form.validate_on_submit():
-        pengguna = User(username=form.namauser.data, email=form.surel.data)
+        pengguna = User(username=form.namauser.data)
         pengguna.set_password(form.katasandi.data)
         db.session.add(pengguna)
         db.session.commit()
         flash('Anda berhasil terdaftar')
-        return redirect(url_for('masuk'))
+        return redirect(url_for('auth.masuk'))
     return render_template('daftar.html', title='Daftar', fm=form)
+
+@auth_bp.route('/keluar')
+def keluar():
+    logout_user()
+    return redirect(url_for('induk.home'))

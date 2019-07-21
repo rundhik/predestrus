@@ -5,7 +5,7 @@ from wtforms import (
 )
 from wtforms.validators import (
     DataRequired, Length, ValidationError,
-    NumberRange, EqualTo, Email
+    NumberRange, EqualTo
     )
 from aplikasi.user.user_models import User
 
@@ -13,7 +13,7 @@ class MasukForm(Formulir):
     namauser = StringField('Nama User', validators=[DataRequired(message='Wajib diisi')])
     katasandi = PasswordField('Kata Sandi', validators=[DataRequired(message='Wajib diisi')])
     ingat_saya =  BooleanField('Ingat Saya')
-    kirim = SubmitField('Sign In')
+    kirim = SubmitField('Masuk')
 
 class DaftarForm(Formulir):
     namauser = StringField('Nama User', validators=[DataRequired(message='Wajib diisi')])
@@ -26,8 +26,3 @@ class DaftarForm(Formulir):
         u = User.query.filter_by(username=namauser.data).first()
         if u is not None:
             raise ValidationError('Username sudah dipakai')
-    
-    def validate_surel(self, surel):
-        u = User.query.filter_by(email=surel.data).first()
-        if u is not None:
-            raise ValidationError('Email sudah digunakan')

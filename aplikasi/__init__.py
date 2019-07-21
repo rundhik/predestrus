@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_login import current_user
+from datetime import datetime
+from konfigurasi import DevConfig
 
 
 db = SQLAlchemy()
@@ -10,10 +13,10 @@ migrate = Migrate()
 bootstrap = Bootstrap()
 moment = Moment()
 
-def buat_app(aplikasiestrus):
+def buat_app(nama_konfigurasi):
     
     apl = Flask(__name__)
-    apl.config.from_object(aplikasiestrus)
+    apl.config.from_object(nama_konfigurasi)
 
     db.init_app(apl)
     migrate.init_app(apl, db)
@@ -36,6 +39,11 @@ def buat_app(aplikasiestrus):
     apl.register_error_handler(403, akses_ditolak)
     apl.register_error_handler(500, internal_error)
 
+    @apl.before_request
+    def before_request():
+        if current_user.is_authenticated:
+            current_user.last_login = datetime.utcnow()
+            db.session.commit()
     return apl
 
 def laman_tak_ditemukan(error):
