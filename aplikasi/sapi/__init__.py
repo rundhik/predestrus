@@ -1,6 +1,6 @@
 from aplikasi import db, adm
 from flask_admin.contrib.sqla import ModelView
-import aplikasi.sapi.sapi_models as msapi
+from aplikasi.sapi import sapi_models as msapi
 
 
 def buat_modul(apl, **kwargs):
