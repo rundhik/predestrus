@@ -48,17 +48,6 @@ def buat_app(nama_konfigurasi):
             current_user.last_login = datetime.utcnow()
             db.session.commit()
     
-    from flask_admin.contrib.sqla import ModelView
-    import aplikasi.user.user_models as muser
-    import aplikasi.sapi.sapi_models as msapi
-    import aplikasi.wilayah.wilayah_models as mwilayah
-    import aplikasi.anggota.anggota_models as manggota
-
-    adm.add_view(ModelView(muser.User, db.session))
-    adm.add_view(ModelView(msapi.Sapi, db.session))
-    adm.add_view(ModelView(mwilayah.Wilayah, db.session))
-    adm.add_view(ModelView(manggota.Anggota, db.session))
-
     return apl
 
 def laman_tak_ditemukan(error):

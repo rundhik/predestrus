@@ -1,4 +1,5 @@
 from .. import db
+from datetime import date, datetime
 
 class Anggota(db.Model):
     __tablename__ = 'anggota'
@@ -11,11 +12,8 @@ class Anggota(db.Model):
         backref='sapi',
         lazy='dynamic'
     )
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    update_at = db.Column(db.DateTime, default=db.func.current_timestamps(), onupdate=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, namaanggota):
-        self.namaanggota = namaanggota
-    
     def __repr__(self):
         return '<nama anggota : {}>'.format(self.namaanggota)

@@ -4,3 +4,4 @@ migrations/
 __pycache__/
 *.db
 .env
+app/

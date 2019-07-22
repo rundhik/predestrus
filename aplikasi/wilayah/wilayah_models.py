@@ -1,4 +1,6 @@
 from .. import db
+from datetime import date, datetime
+
 class Wilayah(db.Model):
     __tablename__ = 'wilayah'
     id = db.Column(db.Integer(), primary_key=True)
@@ -8,11 +10,8 @@ class Wilayah(db.Model):
         backref='anggota',
         lazy='dynamic'
     )
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    update_at = db.Column(db.DateTime, default=db.func.current_timestamps(), onupdate=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, namawilayah):
-        self.namawilayah = namawilayah
-    
     def __repr__(self):
         return '<wilayah : {}>'.format(self.namawilayah)
