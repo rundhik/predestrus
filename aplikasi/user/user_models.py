@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     )
     last_login = db.Column(db.DateTime, default=datetime.utcnow)
     created_at  = db.Column(db.DateTime,  default=db.func.current_timestamp())
-    update_at = db.Column(db.DateTime,  default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime,  default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     def __repr__(self):
         return '<User {} pass {}>'.format(self.username, self.password)

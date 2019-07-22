@@ -12,8 +12,9 @@ class Sapi(db.Model):
     ib = db.Column(db.Date, default=date.today)
     pkb = db.Column(db.Date, default=date.today)
     anggota_id = db.Column(db.Integer(), db.ForeignKey('anggota.id'))
+    anggota = db.relationship('Anggota')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    update_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def __repr__(self):
         return '<nomor sapi : {}>'.format(self.no_sapi)
