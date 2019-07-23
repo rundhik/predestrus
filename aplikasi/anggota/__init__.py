@@ -1,7 +1,7 @@
 from aplikasi import db, adm
 from flask_admin.contrib.sqla import ModelView
-import aplikasi.anggota.anggota_models as manggota
-import aplikasi.anggota.anggota_controllers as canggota
+from aplikasi.anggota import anggota_models as manggota
+from aplikasi.anggota import anggota_controllers as canggota
 
 
 
