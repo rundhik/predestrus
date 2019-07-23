@@ -3,6 +3,7 @@ from .sapi_models import db, Sapi
 from .sapi_forms import SapiForm
 from aplikasi import has_role, login_required
 from datetime import date
+from . import ModelView
 
 sapi_bp = Blueprint(
     'cow',
@@ -11,6 +12,10 @@ sapi_bp = Blueprint(
     url_prefix="/cow"
 )
 
+class SapiList(ModelView):
+    column_searchable_list = ('no_sapi', 'anggota_id',)
+    column_sortable_list = ('no_sapi',)
+    column_exclude_list = ('created_at', 'updated_at')
 # @sapi_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 # @has_role('petugas')

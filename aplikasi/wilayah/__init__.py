@@ -1,6 +1,6 @@
 from aplikasi import db, adm
 from flask_admin.contrib.sqla import ModelView
-import aplikasi.wilayah.wilayah_models as mwilayah
+from aplikasi.wilayah import wilayah_models as mwilayah
 
 
 def buat_modul(apl, **kwargs):
