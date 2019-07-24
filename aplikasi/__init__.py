@@ -32,6 +32,7 @@ def buat_app(nama_konfigurasi):
     from .anggota import buat_modul as anggota_modul
     from .sapi import buat_modul as sapi_modul
     from .inseminasi import buat_modul as ib_modul
+    from .pkb import buat_modul as pkb_modul
     
     induk_modul(apl)
     auth_modul(apl)
@@ -39,6 +40,7 @@ def buat_app(nama_konfigurasi):
     anggota_modul(apl)
     sapi_modul(apl)
     ib_modul(apl)
+    pkb_modul(apl)
 
     apl.register_error_handler(404, laman_tak_ditemukan)
     apl.register_error_handler(403, akses_ditolak)
