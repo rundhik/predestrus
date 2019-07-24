@@ -5,9 +5,10 @@ class Sapi(db.Model):
     __tablename__ = 'sapi'
     id = db.Column(db.Integer(), primary_key=True)
     no_sapi = db.Column(db.String(255), nullable=False, index=True)
-    fitur1 = db.Column(db.Integer())
-    fitur2 = db.Column(db.Integer())
-    fitur3 = db.Column(db.Integer())
+    rpf = db.Column(db.Integer())
+    perilaku = db.Column(db.Integer())
+    ib_ke = db.Column(db.Integer())
+    jarak_ib = db.Column(db.Integer())
     laktasi = db.Column(db.Integer())
     ib = db.Column(db.Date, default=date.today)
     pkb = db.Column(db.Date, default=date.today)
