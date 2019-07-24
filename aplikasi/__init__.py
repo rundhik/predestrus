@@ -31,12 +31,14 @@ def buat_app(nama_konfigurasi):
     from .wilayah import buat_modul as wilayah_modul
     from .anggota import buat_modul as anggota_modul
     from .sapi import buat_modul as sapi_modul
+    from .inseminasi import buat_modul as ib_modul
     
     induk_modul(apl)
     auth_modul(apl)
     wilayah_modul(apl)
     anggota_modul(apl)
     sapi_modul(apl)
+    ib_modul(apl)
 
     apl.register_error_handler(404, laman_tak_ditemukan)
     apl.register_error_handler(403, akses_ditolak)
