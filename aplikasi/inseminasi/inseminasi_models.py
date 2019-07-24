@@ -16,4 +16,4 @@ class Inseminasi(db.Model):
     tgl_ib = db.Column(db.Date, default=date.today)
     
     def __repr__(self):
-        return '<IB sapi : {}>'.format(self.sapi_id)
+        return 'IB sapi no.: {}'.format(self.sapi_id)

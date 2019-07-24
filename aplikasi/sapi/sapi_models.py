@@ -18,4 +18,4 @@ class Sapi(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def __repr__(self):
-        return '<nomor sapi : {}>'.format(self.no_sapi)
+        return 'No. sapi : {}'.format(self.no_sapi)
