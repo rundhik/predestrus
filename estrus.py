@@ -4,6 +4,8 @@ from aplikasi.user.user_models import User, Role
 from aplikasi.wilayah.wilayah_models import Wilayah
 from aplikasi.anggota.anggota_models import Anggota
 from aplikasi.sapi.sapi_models import Sapi
+from aplikasi.inseminasi.inseminasi_models import Inseminasi
+from aplikasi.pkb.pkb_models import Pkb
 
 env = os.environ.get('WEBAPP_ENV', 'dev')
 apl = buat_app('konfigurasi.%sConfig' % env.capitalize())
@@ -18,7 +20,9 @@ def make_shell_context():
         Anggota=Anggota,
         Sapi=Sapi,
         User=User,
-        Role=Role
+        Role=Role,
+        Inseminasi=Inseminasi,
+        Pkb=Pkb
         )
 
 if __name__ == '__main__':
