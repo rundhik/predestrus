@@ -85,3 +85,30 @@ class Undersampling:
         return self.y_train
     def ytest(self, y_test):
         return self.y_test
+
+class Classifier:
+    xtr = MinMaxScaler().fit_transform(Oversampling.x_train)
+    ytr = Oversampling.y_train
+    mlp = MLPClassifier(hidden_layer_sizes=(6,8,6), 
+                    max_iter=200,
+                    activation='tanh',
+                    random_state=1,
+                    solver='lbfgs',
+                    verbose=10,
+                    warm_start=False
+                    )
+    mlp.fit(xtr, ytr)
+
+    xts = MinMaxScaler().fit_transform(Oversampling.x_test)
+    yts = Oversampling.y_test
+    y_pred = mlp.predict(xts)
+    mlp_score = mlp.score(xts, yts)
+    roc_score = roc_auc_score(yts, y_pred)
+
+    def cls(self, mlp):
+        return self.mlp
+    def mlpscore(self, mlp_score):
+        return self.mlp_score
+    def rocscore(self, roc_score):
+        return self.roc_score
+    pass
