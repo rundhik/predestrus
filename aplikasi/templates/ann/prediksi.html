@@ -16,18 +16,19 @@
                     <th scope="col">prediksi</th>
                   </tr>
                 </thead>
-                {% for data in df %}
                 <tbody>
+                {% for data in prediksi %}
                   <tr>
-                    <th>{{ data[0] }}</th>
-                    <th>{{ data[1] }}</th>
-                    <th>{{ data[2] }}</th>
-                    <th>{{ data[3] }}</th>
-                    <th>{{ data[4] }}</th>
+                    <td>{{ data[0] }}</td>
+                    <td>{{ data[1] }}</td>
+                    <td>{{ data[2] }}</td>
+                    <td>{{ data[3] }}</td>
+                    <td>{{ data[4] }}</td>
                     <td>
-                        {% if data[0]==1 %} Birahi {% else %} Tidak Birahi {% endif %}
+                        {% if data[5]==1 %} Birahi {% else %} Tidak Birahi {% endif %}
                     </td>
                   </tr>
+                {% endfor %}
                 </tbody>
               </table>
         </div>

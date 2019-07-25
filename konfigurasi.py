@@ -1,17 +1,12 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
-    SECRET_KEY = '\xd7w;odC+\xb4\xc8\xd6~\x8ag\xee;!\x01\xd9\xb6c\xe5u\xfe\xe1'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    @staticmethod
-    def init_app(apl):
         pass
 
 class ProdConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-    'sqlite:///' + os.path.join(basedir, 'database.db')
+        'sqlite:///' + os.path.join(basedir, 'database.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = '\xd7w;odC+\xb4\xc8\xd6~\x8ag\xee;!\x01\xd9\xb6c\xe5u\xfe\xe1'
 
