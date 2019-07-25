@@ -9,26 +9,11 @@ ann_bp = Blueprint(
 
 @ann_bp.route('/prediksi', methods=('GET', 'POST'))
 def prediksi():
-    # from .ann_models import Classifier as cls
-    df = pd.read_sql_table('dataset', db.engine)
-    #ujicoba pakai tabel dataset, nanti ambil dari tabel sapi
-    df = df.values #convert panda dataframe jadi array
-    from sqlalchemy import text
     s = []
-    for rpf, perilaku, ib_ke, jarak_ib, laktasi, ib_hasil in db.engine.execute('select * from dataset'):
+    from sqlalchemy import text
+    sql = text('select * from dataset')
+    r = db.engine.execute(sql)
+    for rpf, perilaku, ib_ke, jarak_ib, laktasi, ib_hasil in r :
         s.append((rpf, perilaku, ib_ke, jarak_ib, laktasi, ib_hasil))
-    # sql = text('select * from dataset')
-    # r = db.engine.execute(sql)
-    # s = [row for row in r]
-    # for i in df:        
-    #     df[i][5] = cls.mlp.predict(
-    #         [[
-    #             df[i][0],
-    #             df[i][1],
-    #             df[i][2],
-    #             df[i][3],
-    #             df[i][4]
-    #         ]]
-    #     )
     return render_template('prediksi.html', title='Prediksi', prediksi=s)
 

@@ -1,4 +1,4 @@
-from .. import db
+from aplikasi import db
 from datetime import date, datetime
 
 class Wilayah(db.Model):

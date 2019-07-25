@@ -4,6 +4,20 @@ from aplikasi.ann import (
     accuracy_score, cohen_kappa_score, MLPClassifier,
     roc_auc_score, confusion_matrix, resample
 )
+from datetime import date, datetime
+from aplikasi.sapi.sapi_models import Sapi
+
+class Prediksi(db.Model):
+    __tablename__ = 'prediksi'
+    id = db.Column(db.Integer(), primary_key=True)
+    sapi_id = db.Column(db.Integer(), db.ForeignKey('sapi.id'))
+    sapi = db.relationship('Sapi')
+    estrus = db.Column(db.Integer())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return 'Sapi Estrus : {}'.format(self.sapi_id)
 
 def getDataset():
         df = pd.read_sql_table('dataset', db.engine)
@@ -117,4 +131,9 @@ class Classifier:
         return self.mlp_score
     def rocscore(self, roc_score):
         return self.roc_score
+    pass
+
+class Prediction:
+    s = Sapi.query.all()
+
     pass

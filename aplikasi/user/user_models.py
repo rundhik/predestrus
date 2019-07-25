@@ -1,4 +1,4 @@
-from .. import db
+from aplikasi import db
 from datetime import datetime
 from flask_login import UserMixin
 from aplikasi.otentikasi import bcrypt
