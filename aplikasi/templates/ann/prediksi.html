@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block isi_content %}
+    <h1>Menambah Wilayah</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">rpf</th>
+                    <th scope="col">perilaku</th>
+                    <th scope="col">ib_ke</th>
+                    <th scope="col">jarak_ib</th>
+                    <th scope="col">laktasi</th>
+                    <th scope="col">prediksi</th>
+                  </tr>
+                </thead>
+                {% for data in df %}
+                <tbody>
+                  <tr>
+                    <th>{{ data[0] }}</th>
+                    <th>{{ data[1] }}</th>
+                    <th>{{ data[2] }}</th>
+                    <th>{{ data[3] }}</th>
+                    <th>{{ data[4] }}</th>
+                    <td>
+                        {% if data[0]==1 %} Birahi {% else %} Tidak Birahi {% endif %}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+{% endblock %}

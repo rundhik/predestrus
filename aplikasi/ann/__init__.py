@@ -17,4 +17,3 @@ from aplikasi.ann import ann_models as mann
 def buat_modul(apl, **kwargs):
     from .ann_controllers import ann_bp
     apl.register_blueprint(ann_bp)
-    # adm.add_view(cann.PrediksiList(cann.dataset, db.session))

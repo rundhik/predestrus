@@ -6,12 +6,13 @@ from . import (
     accuracy_score, cohen_kappa_score, MLPClassifier,
     roc_auc_score, confusion_matrix, resample
 )
+class Dataset:
+    df = pd.read_sql_table('dataset', db.engine)
+    def getDataset(self, df):
+        return self.df
 
-def getDataset(tabel='dataset'):
-    df = pd.read_sql_table(tabel, db.engine)
-    return df
 class Original:
-    df = getDataset()
+    df = Dataset.df
     df.columns = range(df.shape[1])
     x =  df.loc[:,len(df.columns)-len(df.columns):len(df.columns)-2]
     y = df.loc[:,len(df.columns)-1:len(df.columns)-1]
@@ -28,7 +29,7 @@ class Original:
         return self.y_test
 
 class Oversampling:
-    df = getDataset()
+    df = Dataset.df
     df.columns = range(df.shape[1])
     major = Original.y_train.loc[:,5].value_counts()[1]
     minor = Original.y_train.loc[:,5].value_counts()[0]
@@ -58,7 +59,7 @@ class Oversampling:
         return self.y_test
 
 class Undersampling:
-    df = getDataset()
+    df = Dataset.df
     df.columns = range(df.shape[1])
     major = Original.y_train.loc[:,5].value_counts()[1]
     minor = Original.y_train.loc[:,5].value_counts()[0]
