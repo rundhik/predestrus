@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
