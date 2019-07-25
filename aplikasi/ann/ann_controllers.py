@@ -9,8 +9,7 @@ ann_bp = Blueprint(
 
 @ann_bp.route('/prediksi', methods=('GET', 'POST'))
 def prediksi():
-    from .ann_models import Classifier
-    cls = Classifier()
+    from .ann_models import Classifier as cls
     df = pd.read_sql_table('dataset', db.engine)
     #ujicoba pakai tabel dataset, nanti ambil dari tabel sapi
     df = df.values #convert panda dataframe jadi array
