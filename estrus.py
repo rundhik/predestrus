@@ -3,7 +3,7 @@ from aplikasi import buat_app, db, migrate
 from aplikasi.user.user_models import User, Role
 from aplikasi.wilayah.wilayah_models import Wilayah
 from aplikasi.anggota.anggota_models import Anggota
-from aplikasi.sapi.sapi_models import Sapi
+from aplikasi.sapi.sapi_models import Sapi, Prediksi
 from aplikasi.inseminasi.inseminasi_models import Inseminasi
 from aplikasi.pkb.pkb_models import Pkb
 
@@ -22,7 +22,8 @@ def make_shell_context():
         User=User,
         Role=Role,
         Inseminasi=Inseminasi,
-        Pkb=Pkb
+        Pkb=Pkb,
+        Prediksi=Prediksi
         )
 
 if __name__ == '__main__':

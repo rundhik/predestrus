@@ -19,3 +19,15 @@ class Sapi(db.Model):
     
     def __repr__(self):
         return 'No. sapi : {}'.format(self.no_sapi)
+
+class Prediksi(db.Model):
+    __tablename__ = 'prediksi'
+    id = db.Column(db.Integer(), primary_key=True)
+    sapi_id = db.Column(db.Integer(), db.ForeignKey('sapi.id'))
+    sapi = db.relationship('Sapi')
+    estrus = db.Column(db.Integer())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return 'Sapi Estrus : {}'.format(self.sapi_id)
