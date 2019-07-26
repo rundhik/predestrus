@@ -24,45 +24,23 @@ def prediksi():
     laktasimin = min(Sapi.query.with_entities(Sapi.laktasi).all())[0]
     laktasimax = max(Sapi.query.with_entities(Sapi.laktasi).all())[0]
     from aplikasi.ann.ann_models import Classifier as cls
-    if ( Prediksi.query.all() == []): #bulk insert (doing once when table is empty)
-        for i in q:
-            e = cls.mlp.predict([[
-                (i.rpf - rpfmin)/(rpfmax-rpfmin), 
-                (i.perilaku - perilakumin)/(perilakumax-perilakumin), 
-                (i.ib_ke - ib_kemin)/(ib_kemax-ib_kemin), 
-                (i.jarak_ib - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
-                (i.laktasi - laktasimin)/(laktasimax-laktasimin), 
-            ]])
-            d = Prediksi(
-                sapi_id = i.id,
-                estrus = int(e[0])
+    for i in q:
+        e = cls.mlp.predict([[
+            (i.rpf - rpfmin)/(rpfmax-rpfmin), 
+            (i.perilaku - perilakumin)/(perilakumax-perilakumin), 
+            (i.ib_ke - ib_kemin)/(ib_kemax-ib_kemin), 
+            (i.jarak_ib - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
+            (i.laktasi - laktasimin)/(laktasimax-laktasimin),
+        ]])
+        if Prediksi.query.filter_by(sapi_id = i.id).all() == []:
+            f = Prediksi(sapi_id = i.id, estrus = int(e[0]))
+            db.session.add(f)        
+        elif Prediksi.query.filter_by(sapi_id=i.id).all() == i.id:
+            Prediksi.query.filter_by(sapi_id=i.id).update(
+                Prediksi(estrus = int(e[0]))
             )
-            db.session.add(d)
-    else:
-        for i in q:
-            e = cls.mlp.predict([[
-                (i.rpf - rpfmin)/(rpfmax-rpfmin), 
-                (i.perilaku - perilakumin)/(perilakumax-perilakumin), 
-                (i.ib_ke - ib_kemin)/(ib_kemax-ib_kemin), 
-                (i.jarak_ib - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
-                (i.laktasi - laktasimin)/(laktasimax-laktasimin),
-            ]])
-            if Prediksi.query.filter_by(sapi_id=i.id) == i.id:
-                Prediksi.query.filter_by(sapi_id=i.id).update(
-                    Prediksi(estrus = int(e[0]))
-                )
-            elif Prediksi.query.filter_by(sapi_id = i.id).all() == []:
-                e = cls.mlp.predict([[
-                    (i.rpf - rpfmin)/(rpfmax-rpfmin), 
-                    (i.perilaku - perilakumin)/(perilakumax-perilakumin), 
-                    (i.ib_ke - ib_kemin)/(ib_kemax-ib_kemin), 
-                    (i.jarak_ib - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
-                    (i.laktasi - laktasimin)/(laktasimax-laktasimin),  
-                ]])
-                f = Prediksi(sapi_id = i.id, estrus = int(e[0]))
-                db.session.add(f)
-
     db.session.commit()
+    
     data = Prediksi.query.all()
     return render_template('prediksi.html', title='Prediksi', prediksi=data)
 
