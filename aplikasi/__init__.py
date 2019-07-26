@@ -10,7 +10,7 @@ from datetime import datetime
 from konfigurasi import DevConfig
 
 
-db = SQLAlchemy()
+db = SQLAlchemy() # db = SQLAlchemy(session_options={"autoflush": False})
 migrate = Migrate()
 bootstrap = Bootstrap()
 moment = Moment()

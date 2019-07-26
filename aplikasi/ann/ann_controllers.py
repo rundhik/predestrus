@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, flash, redirect, url_for
 from aplikasi import has_role, login_required, db, pd
 from aplikasi.sapi.sapi_models import Sapi, Prediksi
 from aplikasi.ann import MinMaxScaler
+from sqlalchemy import text
 
 ann_bp = Blueprint(
     'ann',
@@ -12,6 +13,8 @@ ann_bp = Blueprint(
 
 @ann_bp.route('/prediksi', methods=('GET', 'POST'))
 def prediksi():
+    # db.engine.execute('DELETE FROM prediksi')
+    # db.session.commit()
     q = Sapi.query.all()
     rpfmin = min(Sapi.query.with_entities(Sapi.rpf).all())[0]
     rpfmax = max(Sapi.query.with_entities(Sapi.rpf).all())[0]
@@ -24,6 +27,8 @@ def prediksi():
     laktasimin = min(Sapi.query.with_entities(Sapi.laktasi).all())[0]
     laktasimax = max(Sapi.query.with_entities(Sapi.laktasi).all())[0]
     from aplikasi.ann.ann_models import Classifier as cls
+    x = 0
+    y = 0
     for i in q:
         e = cls.mlp.predict([[
             (i.rpf - rpfmin)/(rpfmax-rpfmin), 
@@ -33,14 +38,26 @@ def prediksi():
             (i.laktasi - laktasimin)/(laktasimax-laktasimin),
         ]])
         if Prediksi.query.filter_by(sapi_id = i.id).all() == []:
-            f = Prediksi(sapi_id = i.id, estrus = int(e[0]))
-            db.session.add(f)        
-        elif Prediksi.query.filter_by(sapi_id=i.id).all() == i.id:
-            Prediksi.query.filter_by(sapi_id=i.id).update(
-                Prediksi(estrus = int(e[0]))
-            )
+            f = Prediksi(sapi_id = i.id, estrus = int(e[0])+5)
+            x = x + 1
+            db.session.add(f)
+            
+        elif Prediksi.query.filter_by(sapi_id = i.id).first().sapi_id == i.id:
+            Prediksi.query.filter_by(sapi_id=i.id).update({ 'estrus' : int(e[0])+9})
+            y = y + 1
+            db.session.commit()
+
     db.session.commit()
-
+    db.session.close()
     data = Prediksi.query.all()
-    return render_template('prediksi.html', title='Prediksi', prediksi=data)
+    return render_template('prediksi.html', title='Prediksi', prediksi=data, x=x, y=y)
 
+# @ann_bp.route('/hasilprediksi', methods=('GET', 'POST'))
+# def hasil():
+#     from sqlalchemy import text
+#     q = text('select \
+#         sapi.no_sapi,\
+#         anggota.namaanggota,\
+#         prediksi.estrus,\
+#         date(prediksi.updated_at, "+3days")
+#     ')
