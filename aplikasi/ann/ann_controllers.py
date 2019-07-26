@@ -1,7 +1,6 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
 from aplikasi import has_role, login_required, db, pd
 from aplikasi.sapi.sapi_models import Sapi, Prediksi
-from aplikasi.ann.ann_models import Classifier as cls
 
 ann_bp = Blueprint(
     'ann',
@@ -14,6 +13,7 @@ ann_bp = Blueprint(
 def prediksi():
     q = Sapi.query.all()
     if ( Prediksi.query.all() is None): #bulk insert (doing once when table is empty)
+        from aplikasi.ann.ann_models import Classifier as cls
         for i in q:
             d = Prediksi(
                 sapi_id = i.id, 
@@ -24,6 +24,7 @@ def prediksi():
                 ))
             db.session.add(d)
     else:
+        from aplikasi.ann.ann_models import Classifier as cls
         for i in q:
             if ( Sapi.query.filter_by(sapi_id = i.id) is None ):
                 d = Prediksi(
