@@ -12,52 +12,27 @@ ann_bp = Blueprint(
 @ann_bp.route('/prediksi', methods=('GET', 'POST'))
 def prediksi():
     q = Sapi.query.all()
-    if ( Prediksi.query.all() is None): #bulk insert (doing once when table is empty)
-        from aplikasi.ann.ann_models import Classifier as cls
+    # from aplikasi.ann.ann_models import Classifier as cls
+    if ( Prediksi.query.all() == []): #bulk insert (doing once when table is empty)
         for i in q:
             d = Prediksi(
-                sapi_id = i.id, 
-                estrus = cls.mlp.predict(
-                    [[
-                        i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi
-                    ]]
-                ))
+                sapi_id = i.id,
+                estrus = 44
+            )
             db.session.add(d)
     else:
-        from aplikasi.ann.ann_models import Classifier as cls
         for i in q:
-            if ( Sapi.query.filter_by(sapi_id = i.id) is None ):
-                d = Prediksi(
-                sapi_id = i.id, 
-                estrus = cls.mlp.predict(
-                    [
-                        [
-                            i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi
-                        ]
-                    ]
-                ))
-                db.session.add(d)
-            else :
-                e = cls.mlp.predict(
-                    [
-                        [
-                            i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi
-                        ]
-                    ]
-                )
-                d = Prediksi.query.filter_by(sapi_id = i.id).update(
+            if Prediksi.query.filter_by(sapi_id=i.id) == i.id:
+                Prediksi.query.filter_by(sapi_id=i.id).update(
                     {
-                        Prediksi.estrus : e
+                        Prediksi.estrus : 55
                     }
                 )
-    
+            elif Prediksi.query.filter_by(sapi_id = i.id).all() == []:
+                f = Prediksi(sapi_id = i.id, estrus = 66)
+                db.session.add(f)
+
     db.session.commit()
-    
-    s = []
-    from sqlalchemy import text
-    sql = text('select * from prediksi')
-    r = db.engine.execute(sql)
-    for sapi_id, estrus in r :
-        s.append((sapi_id, estrus))
-    return render_template('prediksi.html', title='Prediksi', prediksi=s)
+    data = Prediksi.query.all()
+    return render_template('prediksi.html', title='Prediksi', prediksi=data)
 
