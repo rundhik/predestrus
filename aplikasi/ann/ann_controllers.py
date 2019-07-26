@@ -12,24 +12,25 @@ ann_bp = Blueprint(
 @ann_bp.route('/prediksi', methods=('GET', 'POST'))
 def prediksi():
     q = Sapi.query.all()
-    # from aplikasi.ann.ann_models import Classifier as cls
+    from aplikasi.ann.ann_models import Classifier as cls
     if ( Prediksi.query.all() == []): #bulk insert (doing once when table is empty)
         for i in q:
+            e = cls.mlp.predict([[i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi]])
             d = Prediksi(
                 sapi_id = i.id,
-                estrus = 44
+                estrus = int(e[0])
             )
             db.session.add(d)
     else:
         for i in q:
+            e = cls.mlp.predict([[i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi]])
             if Prediksi.query.filter_by(sapi_id=i.id) == i.id:
                 Prediksi.query.filter_by(sapi_id=i.id).update(
-                    {
-                        Prediksi.estrus : 55
-                    }
+                    Prediksi(estrus = e[0])
                 )
             elif Prediksi.query.filter_by(sapi_id = i.id).all() == []:
-                f = Prediksi(sapi_id = i.id, estrus = 66)
+                e = cls.mlp.predict([[i.rpf, i.perilaku, i.ib_ke, i.jarak_ib, i.laktasi]])
+                f = Prediksi(sapi_id = i.id, estrus = int(e[0]))
                 db.session.add(f)
 
     db.session.commit()
