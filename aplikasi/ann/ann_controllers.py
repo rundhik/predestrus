@@ -29,7 +29,7 @@ def prediksi():
             (i.rpf - rpfmin)/(rpfmax-rpfmin), 
             (i.perilaku - perilakumin)/(perilakumax-perilakumin), 
             (i.ib_ke - ib_kemin)/(ib_kemax-ib_kemin), 
-            (i.jarak_ib - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
+            ((i.jarak_ib+3) - jarak_ibmin)/(jarak_ibmax-jarak_ibmin), 
             (i.laktasi - laktasimin)/(laktasimax-laktasimin),
         ]])
         if Prediksi.query.filter_by(sapi_id = i.id).all() == []:
@@ -40,7 +40,7 @@ def prediksi():
                 Prediksi(estrus = int(e[0]))
             )
     db.session.commit()
-    
+
     data = Prediksi.query.all()
     return render_template('prediksi.html', title='Prediksi', prediksi=data)
 
