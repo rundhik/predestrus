@@ -38,26 +38,27 @@ def prediksi():
             (i.laktasi - laktasimin)/(laktasimax-laktasimin),
         ]])
         if Prediksi.query.filter_by(sapi_id = i.id).all() == []:
-            f = Prediksi(sapi_id = i.id, estrus = int(e[0])+5)
+            f = Prediksi(sapi_id = i.id, estrus = int(e[0]))
             x = x + 1
             db.session.add(f)
             
         elif Prediksi.query.filter_by(sapi_id = i.id).first().sapi_id == i.id:
-            Prediksi.query.filter_by(sapi_id=i.id).update({ 'estrus' : int(e[0])+9})
+            Prediksi.query.filter_by(sapi_id=i.id).update({ 'estrus' : int(e[0])})
             y = y + 1
             db.session.commit()
 
     db.session.commit()
     db.session.close()
     data = Prediksi.query.all()
-    return render_template('prediksi.html', title='Prediksi', prediksi=data, x=x, y=y)
+    # return render_template('prediksi.html', title='Prediksi', prediksi=data, x=x, y=y)
+    return redirect(url_for('ann.hasil'))
 
-# @ann_bp.route('/hasilprediksi', methods=('GET', 'POST'))
-# def hasil():
-#     from sqlalchemy import text
-#     q = text('select \
-#         sapi.no_sapi,\
-#         anggota.namaanggota,\
-#         prediksi.estrus,\
-#         date(prediksi.updated_at, "+3days")
-#     ')
+@ann_bp.route('/hasilprediksi', methods=('GET', 'POST'))
+def hasil():
+    from sqlalchemy import text
+    q = text('SELECT sapi.no_sapi as "sapi", anggota.namaanggota as "anggota", prediksi.estrus "estrus", date(prediksi.updated_at, "+3 days") as "tanggal", wilayah.namawilayah as "wilayah" FROM prediksi LEFT JOIN sapi ON sapi.id = prediksi.sapi_id LEFT JOIN anggota ON anggota.id = sapi.anggota_id LEFT JOIN wilayah ON wilayah.id = anggota.wilayah_id WHERE prediksi.estrus = 1')
+    r = db.engine.execute(q)
+    data = []
+    for sapi, anggota, estrus, tanggal, wilayah in r:
+        data.append((sapi,anggota, estrus, tanggal, wilayah))
+    return render_template('hasil.html', title='Hasil Prediksi', prediksi=data)

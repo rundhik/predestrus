@@ -1,9 +1,11 @@
 {% extends '/bootstrap/base.html' %}
-
 {% block title %}
     {% if title %}{{ title }} - Aplikasi Prediksi Estrus Sapi{% else %}{{ ('Selamat Datang - Aplikasi Prediksi Estrus Sapi') }}{% endif %}
 {% endblock %}
-
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+{% endblock %}
 {% block navbar %}
     <nav class="navbar navbar-default">
         <div class="container">
@@ -53,6 +55,11 @@
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+     <script>
+            $(document).ready(function() {
+                $('#example').DataTable();
+            } );
+    </script>
 {% endblock %}
