@@ -16,21 +16,21 @@ class SapiList(ModelView):
     column_searchable_list = ('no_sapi', 'anggota_id',)
     column_sortable_list = ('no_sapi',)
     column_exclude_list = ('created_at', 'updated_at')
-# @sapi_bp.route('/', methods=('GET', 'POST'))
+@sapi_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 # @has_role('petugas')
-# def addsapi():
-#     fm = SapiForm()
-#     if fm.validate_on_submit():
-#         s = Sapi(no_sapi=fm.no_sapi.data)
-#         s.fitur1 = fm.fitur1.data
-#         s.fitur2 = fm.fitur2.data
-#         s.fitur3 = fm.fitur3.data
-#         s.laktasi = fm.laktasi.data
-#         s.ib = fm.ib.data
-#         s.pkb = fm.pkb.data
-#         db.session.add(s)
-#         db.session.commit()
-#         flash('Data sapi berhasi ditambahkan')
-#         return redirect(url_for('induk.home'))
-#     return render_template('sapi_add.html', title='Inseminasi Buatan', fm=fm)
+def addsapi():
+    fm = SapiForm()
+    if fm.validate_on_submit():
+        s = Sapi(no_sapi=fm.no_sapi.data)
+        s.fitur1 = fm.fitur1.data
+        s.fitur2 = fm.fitur2.data
+        s.fitur3 = fm.fitur3.data
+        s.laktasi = fm.laktasi.data
+        s.ib = fm.ib.data
+        s.pkb = fm.pkb.data
+        db.session.add(s)
+        db.session.commit()
+        flash('Data sapi berhasi ditambahkan')
+        return redirect(url_for('induk.home'))
+    return render_template('sapi_add.html', title='Inseminasi Buatan', fm=fm)

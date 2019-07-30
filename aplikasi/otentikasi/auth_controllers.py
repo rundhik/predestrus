@@ -26,7 +26,7 @@ def masuk():
         if not laman_selanjutnya or url_parse(laman_selanjutnya).netloc != '':
             laman_selanjutnya = url_for('induk.home')
         return redirect(laman_selanjutnya)
-    return render_template('masuk.html', title='Masuk', fm=form)
+    return render_template('login.html', title='Masuk', fm=form)
 
 @auth_bp.route('/daftar', methods=('GET', 'POST'))
 def daftar():

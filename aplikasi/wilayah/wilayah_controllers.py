@@ -10,11 +10,11 @@ wilayah_bp = Blueprint(
     url_prefix="/region"
 )
 
-# @wilayah_bp.route('/', methods=('GET', 'POST'))
+@wilayah_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 # @has_role('admin')
-# def addwilayah():
-#     fm = WilayahForm()
-#     if fm.validate_on_submit():
-#         pass
-#     return render_template('wilayah_add.html', title='Tambah Wilayah', fm=fm)
+def addwilayah():
+    fm = WilayahForm()
+    if fm.validate_on_submit():
+        pass
+    return render_template('wilayah_add.html', title='Tambah Wilayah', fm=fm)

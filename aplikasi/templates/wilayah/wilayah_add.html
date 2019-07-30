@@ -1,11 +1,15 @@
-{% extends 'layout.html' %}
+{% extends 'app.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block isi_content %}
-    <h1>Menambah Wilayah</h1>
-    <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(fm) }}
+{% block konten %}
+    <div class="col-xxl-4 col-lg-12">
+        <div class="panel">
+            <div class="panel-heading">
+            <h3 class="panel-title">Menambah Wilayah</h3>
+            </div>
         </div>
+    </div>
+    <div class="col-xl-3 col-lg-6">
+        {{ wtf.quick_form(fm) }}
     </div>
 {% endblock %}
