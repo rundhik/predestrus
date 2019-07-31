@@ -1,9 +1,13 @@
-{% extends 'layout.html' %}
+{% extends 'app.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-{% block isi_content %}
-    {% if current_user.is_authenticated %}
-        <h1> Hai, {{ current_user.username }} </h1>
-    {% else %}
-        <h1> Selamat Datang - Aplikasi Prediksi Estrus Sapi </h1>
-    {% endif %}
+{% block konten %}
+    <div class="col-xxl-4 col-lg-12">
+        <div class="panel">
+            <div class="panel-heading">
+            
+            </div>
+        </div>
+    </div>
+    
 {% endblock %}

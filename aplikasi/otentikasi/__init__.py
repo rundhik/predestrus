@@ -2,7 +2,7 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 
 login_manager = LoginManager()
-login_manager.login_view = "otentikasi.masuk"
+login_manager.login_view = "auth.masuk"
 login_manager.login_message = "Silahkan login dahulu"
 login_manager.login_message_category = "info"
 bcrypt = Bcrypt()
