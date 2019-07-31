@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% if title %}{{ title }} - Aplikasi Prediksi Estrus Sapi{% else %}{{ ('Selamat Datang - Aplikasi Prediksi Estrus Sapi') }}{% endif %}</title>
+    <!-- CSS -->
+    <link rel="apple-touch-icon" href="/static/assets/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/static/assets/images/favicon.ico">
+    
+    <link rel="stylesheet" href="/static/global/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/global/css/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="/static/assets/css/site.min.css">
+    <link rel="stylesheet" href="/static/assets/css/alerts.css">
+    
+    <link rel="stylesheet" href="/static/assets/examples/css/pages/login.css">
+    
+    <link rel="stylesheet" href="/static/global/fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="/static/global/fonts/brand-icons/brand-icons.min.css">
+</head>
+<body class="animsition page-login layout-full page-dark">
+
+    <!-- Page -->
+    
+    {% block konten %} 
+    {% endblock  %}
+
+    <!-- End Page -->
+
+    <script src="/static/global/vendor/jquery/jquery.js"></script>
+    <script src="/static/global/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="/static/global/vendor/bootstrap/bootstrap.js"></script>
+</body>
+</html>

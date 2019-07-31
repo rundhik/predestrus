@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block konten %}
+<div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">>
+      <div class="page-content vertical-align-middle animation-slide-top animation-duration-1">
+        <div class="brand">
+          <img class="brand-img" src="/static/assets/images/logo.png" alt="Aplikasi Prediksi Estrus Sapi Perah">
+          <h2 class="brand-text">KPSP Setia Kawan - Nongkojajar</h2>
+        </div>
+        <p>Silahkan login untuk mengakses aplikasi</p>
+        
+            {{ wtf.quick_form(fm) }}
+        <br>
+        <p>Sudah punya akun? <a href="{{ url_for('auth.masuk') }}">Silahkan Masuk</a></p>
+        <footer class="page-copyright page-copyright-inverse">
+          <p>Skripsi Randy Anwar</p>
+          <p>© 2018. Universitas Narotama.</p>
+        </footer>
+      </div>
+    </div>
+{% endblock  %}

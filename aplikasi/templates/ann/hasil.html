@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block isi_content %}
+    <h1>Hasil Prediksi</h1>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <table class="table" id="example" class="display">
+                <thead>
+                  <tr>
+                    <th scope="col">Sapi</th>
+                    <th scope="col">Pemilik</th>
+                    <th scope="col">Prediksi Estrus</th>
+                    <th scope="col">Pada Tanggal</th>
+                    <th scope="col">Wilayah</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for data in prediksi %}
+                  <tr>
+                    <td>{{ data[0] }}</td>
+                    <td>{{ data[1] }}</td>
+                    <td>{% if data[2] == 1 %} Estrus {% else %} Tidak Estrus {% endif %}</td>
+                    <td>{{ data[3] }}</td>
+                    <td>{{ data[4] }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+{% endblock %}

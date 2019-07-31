@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block isi_content %}
+    {% if current_user.is_authenticated %}
+        <h1> Hai, {{ current_user.username }} </h1>
+    {% else %}
+        <h1> Selamat Datang - Aplikasi Prediksi Estrus Sapi </h1>
+    {% endif %}
+{% endblock %}
