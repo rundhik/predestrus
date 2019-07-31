@@ -11,6 +11,11 @@ wilayah_bp = Blueprint(
 )
 
 @wilayah_bp.route('/', methods=('GET', 'POST'))
+def index():
+    q = Wilayah.query.all()
+    return render_template('wilayah_index.html', title='List Wilayah', data=q)
+
+@wilayah_bp.route('/add', methods=('GET', 'POST'))
 # @login_required
 # @has_role('admin')
 def addwilayah():

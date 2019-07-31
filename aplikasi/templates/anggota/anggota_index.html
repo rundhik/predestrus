@@ -1,0 +1,50 @@
+{% extends 'app.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block konten %}
+    <div class="col-xxl-4 col-lg-12">
+        <div class="panel">
+            <div class="panel-heading">
+            <h3 class="panel-title">Data Anggota</h3>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama</th>
+                            <th>Wilayah</th>
+                            <th>Terakhir Update</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Nomor</th>
+                            <th>Nama</th>
+                            <th>Wilayah</th>
+                            <th>Terakhir Update</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for d in data %}
+                            <tr>
+                                <td>{{ d.no_anggota }}</td>
+                                <td>{{ d.namaanggota }}</td>
+                                <th>{{ d.wilayah }}</th>
+                                <td>{{ d.updated_at }}</td>                      
+                                <td>
+                                <a href="#"  class="btn btn-outline btn-xs btn-info">Detail</a>
+                                <a href="#"  class="btn btn-outline btn-xs btn-info">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

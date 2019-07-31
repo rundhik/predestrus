@@ -1,34 +1,55 @@
-{% extends 'layout.html' %}
+{% extends 'app.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block isi_content %}
-    <h1>Hasil Prediksi</h1>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <table class="table" id="example" class="display">
-                <thead>
-                  <tr>
-                    <th scope="col">Sapi</th>
-                    <th scope="col">Pemilik</th>
-                    <th scope="col">Prediksi Estrus</th>
-                    <th scope="col">Pada Tanggal</th>
-                    <th scope="col">Wilayah</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for data in prediksi %}
-                  <tr>
-                    <td>{{ data[0] }}</td>
-                    <td>{{ data[1] }}</td>
-                    <td>{% if data[2] == 1 %} Estrus {% else %} Tidak Estrus {% endif %}</td>
-                    <td>{{ data[3] }}</td>
-                    <td>{{ data[4] }}</td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-              </table>
+{% block konten %}
+    <div class="col-xxl-4 col-lg-12">
+        <div class="panel">
+           
+            <div class="panel-body">
+              <div class="card border border-primary">
+              <div class="card-block">
+                <h4 class="card-title">Perhatian</h4>
+                <p class="card-text">Melakukan perhitungan prediksi akan membutuhkan waktu yang cukup lama, harap sabar.</p>
+                <p> Skor Akurasi pemodelan saat ini = {{ akurasi }} , Skor ROC saat ini = {{ roc }}</p>
+                <a href="{{ url_for('ann.prediksi') }}" class="btn btn-outline btn-primary btn btn-default btn-outline float-right">Hitung Prediksi</a> </div>
+              </div>
+            </div>
+             <div class="panel-heading">
+            <h3 class="panel-title">Hasil Prediksi</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Sapi</th>
+                            <th>Pemilik</th>
+                            <th>Prediksi Estrus</th>
+                            <th>Pada Tanggal</th>
+                            <th>Wilayah</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Sapi</th>
+                            <th>Pemilik</th>
+                            <th>Prediksi Estrus</th>
+                            <th>Pada Tanggal</th>
+                            <th>Wilayah</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for data in prediksi %}
+                            <tr>
+                                <td>{{ data[0] }}</td>
+                                <td>{{ data[1] }}</td>
+                                <td>{% if data[2] == 1 %} Estrus {% else %} Tidak Estrus {% endif %}</td>
+                                <td>{{ data[3] }}</td>
+                                <td>{{ data[4] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col-md-3"></div>
     </div>
 {% endblock %}
