@@ -16,11 +16,18 @@ class AnggotaList(ModelView):
     column_sortable_list = ('namaanggota',)
     column_exclude_list = ('created_at', 'updated_at')
 
-# @anggota_bp.route('/', methods=('GET', 'POST'))
+@anggota_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 # @has_role('admin')
-# def addanggota():
-#     fm = AnggotaForm()
-#     if fm.validate_on_submit():
-#         pass
-#     return render_template('anggota_add.html', title='Tambah Anggota', fm=fm)
+def index():
+    q = Anggota.query.all()
+    return render_template('anggota_index.html', title='List Anggota', data=q)
+
+@anggota_bp.route('/add', methods=('GET', 'POST'))
+# @login_required
+# @has_role('admin')
+def addanggota():
+    fm = AnggotaForm()
+    if fm.validate_on_submit():
+        pass
+    return render_template('anggota_add.html', title='Tambah Anggota', fm=fm)

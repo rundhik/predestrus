@@ -61,4 +61,8 @@ def hasil():
     data = []
     for sapi, anggota, estrus, tanggal, wilayah in r:
         data.append((sapi,anggota, estrus, tanggal, wilayah))
-    return render_template('hasil.html', title='Hasil Prediksi', prediksi=data)
+    
+    from aplikasi.ann.ann_models import Classifier as cls
+    acc = cls.mlp_score
+    roc = cls.roc_score
+    return render_template('hasil.html', title='Hasil Prediksi', prediksi=data, akurasi=acc, roc=roc)

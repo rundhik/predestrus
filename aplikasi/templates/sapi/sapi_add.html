@@ -7,9 +7,10 @@
             <div class="panel-heading">
             <h3 class="panel-title">Menambah Sapi</h3>
             </div>
+            <div class="col-lg-6 offset-lg-3">
+                {{ wtf.quick_form(fm) }}
+                <br/>
+            </div>
         </div>
-    </div>
-    <div class="col-xl-3 col-lg-6">
-        {{ wtf.quick_form(fm) }}
     </div>
 {% endblock %}

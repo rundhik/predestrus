@@ -24,26 +24,20 @@
     <link rel="stylesheet" href="/static/global/vendor/switchery/switchery.css">
     <link rel="stylesheet" href="/static/global/vendor/intro-js/introjs.css">
     <link rel="stylesheet" href="/static/global/vendor/slidepanel/slidePanel.css">
+      
+      <link rel="stylesheet" href="/static/global/vendor/datatables.net-bs4/dataTables.bootstrap4.css">
+      <link rel="stylesheet" href="/static/global/vendor/datatables.net-bs4/dataTables.select.bootstrap4.css">
+      <link rel="stylesheet" href="/static/global/vendor/datatables.net-bs4/dataTables.fixedheader.bootstrap4.css">
+      <link rel="stylesheet"  href="/static/assets/examples/css/datatable.css">
     
     <!-- Fonts -->
     <link rel="stylesheet" href="/static/global/fonts/web-icons/web-icons.min.css">
     <link rel="stylesheet" href="/static/global/fonts/brand-icons/brand-icons.min.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
-    
-    <!--[if lt IE 9]>
-    <script src="/static/global/vendor/html5shiv/html5shiv.min.js"></script>
-    <![endif]-->
-    
-    <!--[if lt IE 10]>
-    <script src="/static/global/vendor/media-match/media.match.min.js"></script>
-    <script src="/static/global/vendor/respond/respond.min.js"></script>
-    <![endif]-->
-    
+        
     <!-- Scripts -->
     <script src="/static/global/vendor/breakpoints/breakpoints.js"></script>
-    <script>
-      Breakpoints();
-    </script>
+    <script> Breakpoints(); </script>
   </head>
   <body class="animsition">
       <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
@@ -81,17 +75,6 @@
                 </i>
               </a>
             </li>
-            <li class="nav-item hidden-sm-down" id="toggleFullscreen">
-              <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
-                <span class="sr-only">Toggle fullscreen</span>
-              </a>
-            </li>
-            <li class="nav-item hidden-float">
-              <a class="nav-link icon wb-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
-                role="button">
-                <span class="sr-only">Toggle Search</span>
-              </a>
-            </li>
           </ul>
           <!-- End Navbar Toolbar -->
     
@@ -106,7 +89,7 @@
                 </span>
               </a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+                <a class="dropdown-item" href="{{ url_for('auth.keluar') }}" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
               </div>
             </li>
           </ul>
@@ -129,10 +112,53 @@
               <li class="site-menu-item has-sub">
                 <a href="javascript:void(0)">
                         <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
-                        <span class="site-menu-title">Sapi</span>
+                        <span class="site-menu-title">Wilayah</span>
                                 <span class="site-menu-arrow"></span>
                     </a>
                 <ul class="site-menu-sub">
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('region.index') }}">
+                      <span class="site-menu-title">List Wilayah</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('region.addwilayah') }}">
+                      <span class="site-menu-title">Tambah Wilayah</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="site-menu-item has-sub">
+                <a href="javascript:void(0)">
+                        <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                        <span class="site-menu-title">Anggota</span>
+                                <span class="site-menu-arrow"></span>
+                    </a>
+                <ul class="site-menu-sub">
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('member.index') }}">
+                      <span class="site-menu-title">List Anggota</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('member.addanggota') }}">
+                      <span class="site-menu-title">Tambah Anggota</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="site-menu-item has-sub">
+                <a href="javascript:void(0)">
+                        <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                        <span class="site-menu-title">Sapi</span>
+                        <span class="site-menu-arrow"></span>
+                    </a>
+                <ul class="site-menu-sub">
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('cow.index') }}">
+                      <span class="site-menu-title">List Sapi</span>
+                    </a>
+                  </li>
                   <li class="site-menu-item">
                     <a class="animsition-link" href="{{ url_for('cow.addsapi') }}">
                       <span class="site-menu-title">Tambah Sapi</span>
@@ -143,16 +169,46 @@
               <li class="site-menu-item has-sub">
                 <a href="javascript:void(0)">
                         <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
-                        <span class="site-menu-title">Wilayah</span>
-                                <span class="site-menu-arrow"></span>
+                        <span class="site-menu-title">Inseminasi</span>
+                        <span class="site-menu-arrow"></span>
                     </a>
                 <ul class="site-menu-sub">
                   <li class="site-menu-item">
-                    <a class="animsition-link" href="{{ url_for('region.addwilayah') }}">
-                      <span class="site-menu-title">Tambah Wilayah</span>
+                    <a class="animsition-link" href="{{ url_for('ib.index') }}">
+                      <span class="site-menu-title">List Inseminasi</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('ib.addib') }}">
+                      <span class="site-menu-title">Tambah Inseminasi</span>
                     </a>
                   </li>
                 </ul>
+              </li>
+              <li class="site-menu-item has-sub">
+                <a href="javascript:void(0)">
+                        <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                        <span class="site-menu-title">PKB</span>
+                        <span class="site-menu-arrow"></span>
+                    </a>
+                <ul class="site-menu-sub">
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('pkbs.index') }}">
+                      <span class="site-menu-title">List PKB</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item">
+                    <a class="animsition-link" href="{{ url_for('pkbs.addpkb') }}">
+                      <span class="site-menu-title">Tambah PKB</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="site-menu-item has-sub">
+                <a href="{{ url_for('ann.hasil') }}">
+                    <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                    <span class="site-menu-title">Hasil Prediksi</span>
+                </a>
               </li>
             </ul>
           </div>
@@ -198,6 +254,22 @@
     <script src="/static/global/vendor/intro-js/intro.js"></script>
     <script src="/static/global/vendor/screenfull/screenfull.js"></script>
     <script src="/static/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+      <script src="/static/global/vendor/datatables.net/jquery.dataTables.js"></script>
+       
+      <script src="/static/global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+      <script src="/static/global/vendor/datatables.net-bs4/dataTables.fixedHeader.js"></script>
+      <!-- Scripts
+      <script src="/static/global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js"></script>
+      <script src="/static/global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js"></script>
+      <script src="/static/global/vendor/datatables.net-scroller/dataTables.scroller.js"></script>
+      <script src="/static/global/vendor/datatables.net-responsive/dataTables.responsive.js"></script>
+      <script src="/static/global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons/dataTables.buttons.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons/buttons.html5.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons/buttons.flash.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons/buttons.print.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons/buttons.colVis.js"></script>
+      <script src="/static/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script> -->
     
     <!-- Scripts -->
     <script src="/static/global/js/Component.js"></script>
@@ -220,7 +292,9 @@
     <script src="/static/global/js/Plugin/asscrollable.js"></script>
     <script src="/static/global/js/Plugin/slidepanel.js"></script>
     <script src="/static/global/js/Plugin/switchery.js"></script>
-    
+      <script src="/static/global/js/Plugin/datatables.js"></script>
+      <script src="/static/assets/examples/js/datatable.js"></script>
+
     <script>
       (function(document, window, $){
         'use strict';
@@ -230,5 +304,5 @@
           Site.run();
         });
       })(document, window, jQuery);
-    </script>
+    </script>    
   </body>
