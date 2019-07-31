@@ -1,4 +1,5 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
+from aplikasi import login_required
 
 induk_bp = Blueprint(
     'induk',
@@ -8,5 +9,6 @@ induk_bp = Blueprint(
 )
 
 @induk_bp.route('/')
+@login_required
 def home():
     return render_template('home.html')
