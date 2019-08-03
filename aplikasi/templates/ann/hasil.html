@@ -9,7 +9,7 @@
               <div class="card-block">
                 <h4 class="card-title">Perhatian</h4>
                 <p class="card-text">Melakukan perhitungan prediksi akan membutuhkan waktu yang cukup lama, harap sabar.</p>
-                <p> Skor Akurasi pemodelan saat ini = {{ akurasi }} , Skor ROC saat ini = {{ roc }}</p>
+                <p> Skor Akurasi pemodelan saat ini = {{ akurasi }} <br/> Skor ROC saat ini = {{ roc }} <br/> Confusion Matrix = {{ cm }}</p>
                 <a href="{{ url_for('ann.prediksi') }}" class="btn btn-outline btn-primary btn btn-default btn-outline float-right">Hitung Prediksi</a> </div>
               </div>
             </div>
