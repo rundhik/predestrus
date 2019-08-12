@@ -45,7 +45,7 @@ class Oversampling:
     df_minority_upsampled = resample(df_minority, 
                                    replace=True, # sample with replacement
                                    n_samples=major,  # to match majority class
-                                   random_state=123) # reproducible results
+                                   random_state=1) # reproducible results
     # Combine majority class with upsampled minority class
     df = pd.concat([df_majority, df_minority_upsampled])
 
@@ -79,9 +79,9 @@ class Undersampling:
 
     # Downsample majority class (Undersampling)
     df_majority_downsampled = resample(df_majority, 
-                                    replace=False,    # sample without replacement
+                                    replace=True,    # sample without replacement
                                     n_samples=minor,     # to match minority class
-                                    random_state=123) # reproducible results
+                                    random_state=1) # reproducible results
     # Combine minority class with downsampled majority class
     df = pd.concat([df_majority_downsampled, df_minority])
 
@@ -106,11 +106,10 @@ class Classifier:
     xtr = MinMaxScaler().fit_transform(Undersampling.x_train)
     ytr = Undersampling.y_train
     mlp = MLPClassifier(hidden_layer_sizes=(6,8,6), 
-                    max_iter=300,
+                    max_iter=1000,
                     activation='tanh',
                     random_state=1,
                     solver='lbfgs',
-                    verbose=10,
                     warm_start=False
                     )
     mlp.fit(xtr, ytr)
