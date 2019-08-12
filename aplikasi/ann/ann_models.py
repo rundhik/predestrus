@@ -103,8 +103,8 @@ class Undersampling:
         return self.value
 
 class Classifier:
-    xtr = MinMaxScaler().fit_transform(Undersampling.x_train)
-    ytr = Undersampling.y_train
+    xtr = MinMaxScaler().fit_transform(Oversampling.x_train)
+    ytr = Oversampling.y_train
     mlp = MLPClassifier(hidden_layer_sizes=(6,8,6), 
                     max_iter=1000,
                     activation='tanh',
@@ -114,8 +114,8 @@ class Classifier:
                     )
     mlp.fit(xtr, ytr)
 
-    xts = MinMaxScaler().fit_transform(Undersampling.x_test)
-    yts = Undersampling.y_test
+    xts = MinMaxScaler().fit_transform(Oversampling.x_test)
+    yts = Oversampling.y_test
     y_pred = mlp.predict(xts)
     mlp_score = mlp.score(xts, yts)
     roc_score = roc_auc_score(yts, y_pred)
